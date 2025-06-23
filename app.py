@@ -2,6 +2,7 @@ import os
 import torch
 import gradio as gr
 import tempfile
+from huggingface_hub import hf_hub_download
 from diffusers import AutoencoderKL, DDPMScheduler
 from transformers import CLIPTextModel, CLIPTokenizer, CLIPTextModelWithProjection
 
@@ -31,7 +32,12 @@ def load_models():
     unet = UNet2DConditionModel.from_pretrained("diffusers/stable-diffusion-xl-1.0-inpainting-0.1", subfolder="unet")
     cloth_encoder = ClothEncoder.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", subfolder="unet")
 
-    unet.load_state_dict(torch.load("./checkpoints/VITONHD/model/pytorch_model.bin"))
+    unet_checkpoint_path = hf_hub_download(
+        repo_id="Benrise/VITON-HD",
+        filename="VITONHD/model/pytorch_model.bin",
+        cache_dir="checkpoints"
+    )
+    unet.load_state_dict(torch.load(unet_checkpoint_path))
     
     models = {
         "unet": unet.to(device, dtype=weight_dtype),
