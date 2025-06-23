@@ -5,9 +5,9 @@ from transformers import CLIPTextModel, CLIPTokenizer, CLIPTextModelWithProjecti
 from promptdresser.models.unet import UNet2DConditionModel
 from promptdresser.models.cloth_encoder import ClothEncoder
 from promptdresser.pipelines.sdxl import PromptDresser
-from utils.caption import generate_caption
-from utils.mask import generate_clothing_mask
-from utils.pose import generate_openpose
+from lib.caption import generate_caption
+from lib.mask import generate_clothing_mask
+from lib.pose import generate_openpose
 
 device = "cuda"
 weight_dtype = torch.float16
@@ -50,21 +50,24 @@ pose_image = generate_openpose("./test/person2.png", output_image_path="./test/p
 prompt_person_image = generate_caption("./test/person2.png", device)
 prompt_cloth_image = generate_caption("./test/00008_00.jpg", device)
 
-
-result = pipeline(
-    image=person_image,
-    mask_image=mask_image,
-    pose_image=pose_image,
-    cloth_encoder=cloth_encoder,
-    cloth_encoder_image=cloth_image,
-    prompt=prompt_person_image,
-    prompt_clothing=prompt_cloth_image,
-    height=1024,
-    width=768,
-    guidance_scale=2.0,
-    guidance_scale_img=4.5,
-    guidance_scale_text=7.5,
-    num_inference_steps=30,
-).images[0]
+with torch.autocast("cuda"):
+    result = pipeline(
+        image=person_image,
+        mask_image=mask_image,
+        pose_image=pose_image,
+        cloth_encoder=cloth_encoder,
+        cloth_encoder_image=cloth_image,
+        prompt="man in skirt",
+        prompt_clothing="black longsleeve",
+        height=1024,
+        width=768,
+        guidance_scale=2.0,
+        guidance_scale_img=4.5,
+        guidance_scale_text=7.5,
+        num_inference_steps=30,
+        strength=1,
+        interm_cloth_start_ratio=0.5,
+        generator=None,
+    ).images[0]
 
 result.save("./test/output_image.jpg")
