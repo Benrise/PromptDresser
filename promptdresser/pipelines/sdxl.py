@@ -15,8 +15,6 @@
 import inspect
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 import os
-import gc
-from PIL import Image
 
 import numpy as np
 import PIL.Image

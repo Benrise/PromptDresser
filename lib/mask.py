@@ -61,11 +61,4 @@ def generate_clothing_mask(
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     mask_image.save(output_path)
     
-    if show_result:
-        import matplotlib.pyplot as plt
-        plt.imshow(mask_image, cmap='gray')
-        plt.title(f"Mask for label {label}")
-        plt.axis('off')
-        plt.show()
-    
     return mask_image

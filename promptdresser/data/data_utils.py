@@ -5,7 +5,6 @@ import numpy as np
 from scipy.ndimage import binary_dilation
 import cv2
 from PIL import Image, ImageDraw
-import torch
 import torchvision.transforms as T
 
 from ..utils import split_procidx

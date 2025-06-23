@@ -1,10 +1,8 @@
-import pdb
 import sys
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).absolute().parents[0].absolute()
 sys.path.insert(0, str(PROJECT_ROOT))
-import os
 
 import cv2
 import numpy as np
@@ -12,9 +10,7 @@ import torch
 import torchvision.transforms as transforms
 from datasets.simple_extractor_dataset import SimpleFolderDataset
 from PIL import Image
-from torch.utils.data import DataLoader
-from tqdm import tqdm
-from utils.transforms import transform_logits, get_affine_transform
+from utils.transforms import transform_logits
 
 
 def get_palette(num_cls):

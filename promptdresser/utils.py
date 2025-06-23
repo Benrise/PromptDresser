@@ -1,9 +1,7 @@
 import os
 from os.path import join as opj
 import json
-import pickle
 import math
-from glob import glob
 
 import numpy as np
 from PIL import Image

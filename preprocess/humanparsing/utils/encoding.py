@@ -10,13 +10,12 @@
 
 """Encoding Data Parallel"""
 import threading
-import functools
 import torch
 from torch.autograd import Variable, Function
 import torch.cuda.comm as comm
 from torch.nn.parallel.data_parallel import DataParallel
 from torch.nn.parallel.parallel_apply import get_a_var
-from torch.nn.parallel._functions import ReduceAddCoalesced, Broadcast
+from torch.nn.parallel._functions import Broadcast
 
 torch_ver = torch.__version__[:3]
 
