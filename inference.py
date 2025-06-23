@@ -37,8 +37,8 @@ def parse_args():
     parser.add_argument("--pretrained_unet_path", type=str, default=None)
     parser.add_argument("--pretrained_cloth_encoder_path", type=str, default=None)
     parser.add_argument("--num_inference_steps", type=int, default=30)
-    parser.add_argument("--skip_paired", action="store_true")
-    parser.add_argument("--skip_unpaired", action="store_true")
+    parser.add_argument("--skip_paired", default=True)
+    parser.add_argument("--skip_unpaired", default=True)
     parser.add_argument("--n_repeat_samples", type=int, default=1)
     parser.add_argument("--s_idx", type=int, default=0)
     parser.add_argument("--e_idx", type=int, default=999999)
@@ -50,9 +50,9 @@ def parse_args():
     parser.add_argument("--no_zero_snr", action="store_true")
     parser.add_argument("--img_h", type=int, default=1024)
     parser.add_argument("--img_w", type=int, default=768)
-    parser.add_argument("--init_model_path", type=str, default="./pretrained_models/stable-diffusion-xl-1.0-inpainting-0.1")
-    parser.add_argument("--init_vae_path", type=str, default="./pretrained_models/sdxl-vae-fp16-fix")
-    parser.add_argument("--init_cloth_encoder_path", type=str, default="./pretrained_models/stable-diffusion-xl-base-1.0")
+    parser.add_argument("--init_model_path", type=str, default="diffusers/stable-diffusion-xl-1.0-inpainting-0.1")
+    parser.add_argument("--init_vae_path", type=str, default="madebyollin/sdxl-vae-fp16-fix")
+    parser.add_argument("--init_cloth_encoder_path", type=str, default="stabilityai/stable-diffusion-xl-base-1.0")
     parser.add_argument("--ip_adapter_num_tokens", type=int, default=4)
     parser.add_argument("--guidance_scale", type=float, default=2.0)
     parser.add_argument("--guidance_scale_img", type=float, default=4.5)
@@ -271,7 +271,7 @@ for idx, (pair_type, img_bns, c_bns, full_txts, clothing_txts) in enumerate(zip(
                         num_inference_steps=args.num_inference_steps,
                         use_jointcond=config.get("use_jointcond", False),
                         interm_cloth_start_ratio=config.get("interm_cloth_start_ratio", 0.5),
-                        detach_cloth_encoder=config.get("detach_cloth_encoder", False),
+                        detach_cloth_encoder=config.get("detach_cloth_encoderк", False),
                         strength=args.strength,
                         category=dataset_config.get("category", None),
                         generator = None,

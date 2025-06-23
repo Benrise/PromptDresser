@@ -14,11 +14,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 import random
 
-from einops import rearrange
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, Optional, Tuple
 
 from diffusers.models.attention import BasicTransformerBlock
-from diffusers.models.unet_2d_blocks import CrossAttnDownBlock2D, CrossAttnUpBlock2D, DownBlock2D, UpBlock2D
+from diffusers.models.unets.unet_2d_blocks import CrossAttnDownBlock2D, CrossAttnUpBlock2D, DownBlock2D, UpBlock2D
 
 def torch_dfs(model: torch.nn.Module):
     result = [model]
